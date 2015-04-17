@@ -20,7 +20,7 @@ public class dbConnection {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(dbConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String url = "jdbc:mysql://localhost:3306/myForum";
+        String url = "jdbc:mysql://localhost:3306/myforum";
         try {
             cn = DriverManager.getConnection(url, "root", "");
         } catch (SQLException ex) {
