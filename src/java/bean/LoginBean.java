@@ -31,10 +31,6 @@ public class LoginBean {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -42,10 +38,4 @@ public class LoginBean {
     public boolean isLoggedIn() {
         return loggedIn;
     }
-
-    public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
-    }
-    
-    
 }
