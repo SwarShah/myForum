@@ -43,15 +43,13 @@ public class CategoryREST {
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public String post(String str) {
-        int result = 0;
+    public Response post(String str) {
         JsonObject json = Json.createReader(new StringReader(str)).readObject();
         String name = json.getString("name");
-        result = doUpdate("INSERT INTO CATEGORY (NAME) VALUES (?)", name);
-        if (result == 1) {
-            return "{\"Status\" : \"Success\"}";
+        if(doUpdate("INSERT INTO CATEGORY (NAME) VALUES (?)", name) == 0){
+            return Response.status(500).build();
         } else {
-            return "{\"Status\":\"Error\"}";
+            return Response.status(200).build();
         }
     }
     
