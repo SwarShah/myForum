@@ -21,6 +21,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -51,6 +52,20 @@ public class CategoryREST {
             return "{\"Status\" : \"Success\"}";
         } else {
             return "{\"Status\":\"Error\"}";
+        }
+    }
+    
+    @PUT
+    @Path("{id}")
+    @Consumes("application/json")
+    public Response put(String str, @PathParam("id") int id){
+        JsonObject json = Json.createReader(new StringReader(str)).readObject();
+        String name = json.getString("name");
+        if(doUpdate("UPDATE CATEGORY SET NAME = ? WHERE C_ID = ?", name, String.valueOf(id)) == 0){
+            return Response.status(500).build();
+        }
+        else{
+            return Response.status(200).build();
         }
     }
     
