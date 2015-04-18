@@ -56,8 +56,12 @@ public class CategoryREST {
     
     @DELETE
     @Path("{id}")
-    public void delete(@PathParam("id") int id){
-        int result = doUpdate("DELETE FROM CATEGORY WHERE C_ID = ?", String.valueOf(id));        
+    public Response delete(@PathParam("id") int id){
+        if (doUpdate("DELETE FROM CATEGORY WHERE C_ID = ?", String.valueOf(id)) == 0){
+             return Response.status(500).build();
+        } else {
+            return Response.ok().build();
+        }             
     }
     
 
