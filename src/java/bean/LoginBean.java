@@ -7,6 +7,11 @@
 package bean;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -33,6 +38,10 @@ public class LoginBean {
         this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -46,7 +55,30 @@ public class LoginBean {
     }   
     
     public void checkLoginWithDb(){
-        Connection cn = credentials.dbConnection.getConnection();
-        
+        try {
+            Connection cn = credentials.dbConnection.getConnection();
+            String query = "SELECT U_ID, PASSWORD FROM LOGIN WHERE USERNAME = ?";
+            PreparedStatement pstmt = cn.prepareStatement(query);
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+            String passwordDb="";
+            int uidDb=0;
+            while(rs.next()){
+                passwordDb = rs.getString("password");
+                uidDb = rs.getInt("u_id");
+            }
+            loggedIn = BCrypt.BCrypt.checkpw(this.password, passwordDb);
+            if(loggedIn){
+                uid = uidDb;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void logout(){
+        if(loggedIn){
+            loggedIn = false;
+        }
     }
 }
