@@ -31,6 +31,9 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(service.CategoryREST.class);
+        resources.add(service.HomeJSON.class);
+        resources.add(service.HomePostJSON.class);
+        resources.add(service.ThreadREST.class);
     }
     
 }
