@@ -58,8 +58,7 @@ public class ThreadREST {
                         .add("description", rs.getString("description"))
                         .add("date", rs.getString("date"))
                         .add("title", rs.getString("title"))
-                        .add("c_id", rs.getInt("c_id"))
-                        .add("u_id", rs.getInt("u_id"))
+                        .add("username", rs.getString("username"))
                         .build();
                 jsonString = json.toString();
             }
