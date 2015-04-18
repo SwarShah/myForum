@@ -13,7 +13,7 @@ import javax.ws.rs.core.Application;
  *
  * @author c0647456
  */
-@javax.ws.rs.ApplicationPath("")
+@javax.ws.rs.ApplicationPath("ws")
 public class ApplicationConfig extends Application {
 
     @Override
@@ -30,7 +30,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(service.ThreadREST.class);
+        resources.add(service.CategoryREST.class);
     }
     
 }
