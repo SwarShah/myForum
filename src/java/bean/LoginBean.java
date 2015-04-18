@@ -6,6 +6,7 @@
 
 package bean;
 
+import java.sql.Connection;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -19,6 +20,7 @@ public class LoginBean {
     private String username = "";
     private String password = "";
     private boolean loggedIn = false;
+    private int uid;
 
     public LoginBean() {
     }
@@ -37,5 +39,14 @@ public class LoginBean {
 
     public boolean isLoggedIn() {
         return loggedIn;
+    }
+
+    public int getUid() {
+        return uid;
+    }   
+    
+    public void checkLoginWithDb(){
+        Connection cn = credentials.dbConnection.getConnection();
+        
     }
 }
