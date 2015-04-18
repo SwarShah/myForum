@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package service;
 
 import static credentials.dbConnection.getConnection;
+import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +16,10 @@ import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
@@ -27,12 +30,28 @@ import javax.ws.rs.core.Response;
  */
 @Path("category")
 public class CategoryREST {
+
     @GET
     @Produces("application/json")
-    public Response get(){
+    public Response get() {
         return Response.ok(getResults("SELECT * FROM CATEGORY")).build();
-    }   
-    
+    }
+
+    @POST
+    @Consumes("application/json")
+    @Produces("application/json")
+    public String post(String str) {
+        int result = 0;
+        JsonObject json = Json.createReader(new StringReader(str)).readObject();
+        String name = json.getString("name");
+        result = doUpdate("INSERT INTO CATEGORY (NAME) VALUES (?)", name);
+        if (result == 1) {
+            return "{\"Status\" : \"Success\"}";
+        } else {
+            return "{\"Status\":\"Error\"}";
+        }
+    }
+
     public static JsonArray getResults(String sql, String... params) {
         JsonArray json = null;
         try {
@@ -48,11 +67,10 @@ public class CategoryREST {
                         .add("c_id", rs.getInt("c_id"))
                         .add("name", rs.getString("name"))
                         .build());
-                System.out.println(rs.getInt("c_id"));
             }
             conn.close();
             json = array.build();
-       } catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(CategoryREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return json;
