@@ -39,6 +39,37 @@ public class ThreadREST {
     public Response get() {
         return Response.ok(getResults("SELECT * FROM THREAD")).build();
     }
+    
+    //Get for specific thread with it details
+    @GET
+    @Path("{id}")
+    @Produces("application/json")
+    public Response getThread(@PathParam("id") int id){
+        try {
+            Connection cn = getConnection();
+            String query = "select t.t_id, t.description, t.title, t.date, l.username from thread t, login l where t.t_id = ? and t.u_id = l.u_id";
+            PreparedStatement ps = cn.prepareStatement(query);
+            ps.setString(1, String.valueOf(id));
+            ResultSet rs = ps.executeQuery();
+            String jsonString = "";
+            while (rs.next()) {
+                JsonObject json = Json.createObjectBuilder()
+                        .add("t_id", rs.getInt("t_id"))
+                        .add("description", rs.getString("description"))
+                        .add("date", rs.getString("date"))
+                        .add("title", rs.getString("title"))
+                        .add("c_id", rs.getInt("c_id"))
+                        .add("u_id", rs.getInt("u_id"))
+                        .build();
+                jsonString = json.toString();
+            }
+            cn.close();
+            return Response.ok(jsonString).build();
+        } catch (SQLException ex) {
+            Logger.getLogger(ThreadREST.class.getName()).log(Level.SEVERE, null, ex);
+            return Response.status(500).build();
+        }
+    }
 
     @POST
     @Consumes("application/json")
