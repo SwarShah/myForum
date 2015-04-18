@@ -18,9 +18,11 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
@@ -51,6 +53,13 @@ public class CategoryREST {
             return "{\"Status\":\"Error\"}";
         }
     }
+    
+    @DELETE
+    @Path("{id}")
+    public void delete(@PathParam("id") int id){
+        int result = doUpdate("DELETE FROM CATEGORY WHERE C_ID = ?", String.valueOf(id));        
+    }
+    
 
     public static JsonArray getResults(String sql, String... params) {
         JsonArray json = null;
