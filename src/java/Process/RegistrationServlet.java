@@ -33,12 +33,12 @@ public class RegistrationServlet extends HttpServlet {
             throws ServletException, IOException {
         Set<String> keySet = request.getParameterMap().keySet();
         try (PrintWriter out = response.getWriter()) {
-            if (keySet.contains("email") && keySet.contains("password")) {
+            if (keySet.contains("username") && keySet.contains("password")) {
                 Connection cn = credentials.dbConnection.getConnection();
-                String email = request.getParameter("email");
+                String email = request.getParameter("username");
                 //Encrypting password
                 String hashedPassword = BCrypt.BCrypt.hashpw(request.getParameter("password"), BCrypt.BCrypt.gensalt());
-                String query = "INSERT INTO login (email, password) VALUES (?, ?)";
+                String query = "INSERT INTO login (username, password) VALUES (?, ?)";
                 PreparedStatement pstmt = cn.prepareStatement(query);
                 pstmt.setString(1, email);
                 pstmt.setString(2, hashedPassword);

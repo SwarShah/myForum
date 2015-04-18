@@ -24,9 +24,9 @@
                         <fieldset>
                             <legend>Registration</legend>
                             <div class="form-group">
-                                <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+                                <label for="inputEmail" class="col-lg-2 control-label">Username</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Username">
                                 </div>
                             </div>
                             <div class="form-group">
