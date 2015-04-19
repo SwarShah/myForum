@@ -44,7 +44,7 @@ public class RegistrationServlet extends HttpServlet {
                 pstmt.setString(2, hashedPassword);
                 int x = pstmt.executeUpdate();
                 if(x==1)
-                    response.sendRedirect("index.html");
+                    response.sendRedirect("login.jsp");
             }
         } catch (SQLException ex) {
             Logger.getLogger(RegistrationServlet.class.getName()).log(Level.SEVERE, null, ex);
