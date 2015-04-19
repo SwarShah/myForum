@@ -45,7 +45,30 @@
         </style>
     </head>
     <body>
+        
         <div class="container">
+                        <div class="page-header page-heading">
+                <h1 class="pull-left"><a href="./index.jsp">Forums</a></h1>
+                <ol class="breadcrumb pull-right where-am-i">
+                    <%
+                        try {
+                            String loggedIn = session.getAttribute("loggedIn").toString();
+                            if (loggedIn.equals("true")) {
+                    %>
+                    <a href="destroySession.jsp">Logout</a>
+                    <% } else {%>
+                    <a href="login.jsp">Login</a>
+                    <a href="registration.jsp">Register</a>
+                    <% }
+                    } catch (Exception e) {%>
+                    <a href="login.jsp">Login</a>
+                    <a href="registration.jsp">Register</a><%
+                        }
+
+                    %> 
+                </ol>
+                <div class="clearfix"></div>
+            </div>
             <ul class="media-list forum">
 
                 <%
