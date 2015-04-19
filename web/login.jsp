@@ -5,6 +5,17 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    try {
+        String loggedIn = session.getAttribute("loggedIn").toString();
+        if (loggedIn.equals("true")) {
+            response.sendRedirect("index.jsp");
+        }
+    } catch(Exception e){
+        
+    }
+
+%>   
 <!DOCTYPE html>
 <html>
     <head>
