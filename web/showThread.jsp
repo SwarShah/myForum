@@ -40,15 +40,15 @@
 
         <div class="container" style="margin-top: 35px">
             <div class="page-header page-heading">
-                <h1 class="pull-left">Forums</h1>
+                <h1 class="pull-left"><a href="./index.jsp">Forums</a></h1>
                 <ol class="breadcrumb pull-right where-am-i">
                     <%
                         try {
                             String loggedIn = session.getAttribute("loggedIn").toString();
                             if (loggedIn.equals("true")) {
+
                     %>
                     <a href="destroySession.jsp">Logout</a><br/>
-                    <a href="NewThread.jsp">New Thread</a>
                     <% } else {%>
                     <a href="login.jsp">Login</a>
                     <% }
@@ -68,17 +68,41 @@
                         int id = Integer.valueOf(request.getParameter("cid"));
                         ps.setInt(1, id);
                         ResultSet rs = ps.executeQuery();
-                                while (rs.next()) {%>
-                                <tr><td class='text-center'><i class='fa fa-comments fa-2x text-primary'></i></td><td><h4><a href='./showPost.jsp?tid=<%=rs.getInt("t_id") %>'> <%= rs.getString("description")%> </a><br><small>Some description</small></h4></td><td class='text-center hidden-xs hidden-sm'><a href='#'></a></td><td class='text-center hidden-xs hidden-sm'><a href='#'></a></td><td class='hidden-xs hidden-sm'>by <a href='#'><%= rs.getString("username")%></a><br><small><i class='fa fa-clock-o'></i> 3 months ago</small></td></tr>
-                             
-                <%
-                    }
-                %>
-                
+                        while (rs.next()) {%>
+                        <tr><td class='text-center'><i class='fa fa-comments fa-2x text-primary'></i></td><td><h4><a href='./showPost.jsp?tid=<%=rs.getInt("t_id")%>'> <%= rs.getString("description")%> </a><br><small>Some description</small></h4></td><td class='text-center hidden-xs hidden-sm'><a href='#'></a></td><td class='text-center hidden-xs hidden-sm'><a href='#'></a></td><td class='hidden-xs hidden-sm'>by <a href='#'><%= rs.getString("username")%></a><br><small><i class='fa fa-clock-o'></i><%=rs.getString("date") %></small></td></tr>
+
+                    <%
+                        }
+                    %>
+
                 </tbody>
             </table>
+            <%
+                try {
+                    String logged = session.getAttribute("loggedIn").toString();
 
+                    String uid = session.getAttribute("uid").toString();
+                    if (logged.equals("true")) {
+            %>
+            <form action="NewThread" method="POST">
+
+                <div class="col-lg-10">
+                    <p>Create new thread</p>
+                    <textarea class="form-control" rows="3" id="textArea" name="title"></textarea>
+                    <input type="hidden" name="uid" value="<%= uid%>" />
+                    <input type="hidden" name="cid" value="<%= id%>" />
+                    
+                </div>
+                    <br /><br /><input type="submit" class="btn btn-success">
+            </form><%
+            } else {%>
+            <p>Please login to create thread.</p> <%
+                }
+            } catch (Exception e) {
+            %><p>Please login to create thread.</p><%
+                }
+            %>
         </div>
 
-</body>
+    </body>
 </html>

@@ -44,7 +44,7 @@ public class NewPostServlet extends HttpServlet {
                 pstmt.setString(4, tid);
                 int x = pstmt.executeUpdate();
                 if (x == 1) {
-                    response.sendRedirect("showPost.jsp?tid="+tid);
+                    response.sendRedirect("showPost.jsp?tid=" + tid);
                 }
             }
         } catch (SQLException ex) {
