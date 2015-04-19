@@ -53,7 +53,7 @@
     <body>
         <div class="container" style="margin-top: 35px">
             <div class="page-header page-heading">
-                <h1 class="pull-left">Forums</h1>
+                <h1 class="pull-left">myForums</h1>
                 <ol class="breadcrumb pull-right where-am-i">
                     <%
                         try {
@@ -63,9 +63,11 @@
                     <a href="destroySession.jsp">Logout</a>
                     <% } else {%>
                     <a href="login.jsp">Login</a>
+                    <a href="registration.jsp">Register</a>
                     <% }
                     } catch (Exception e) {%>
-                    <a href="login.jsp">Login</a><%
+                    <a href="login.jsp">Login</a>
+                    <a href="registration.jsp">Register</a><%
                         }
 
                     %> 
