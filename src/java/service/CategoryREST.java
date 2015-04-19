@@ -39,6 +39,13 @@ public class CategoryREST {
     public Response get() {
         return Response.ok(getResults("SELECT * FROM CATEGORY")).build();
     }
+    
+    @GET
+    @Path("{id}")
+    @Produces("application/json")
+    public Response getSingle(@PathParam("id") int id) {
+        return Response.ok(getResults("SELECT * FROM CATEGORY WHERE C_ID = ?", String.valueOf(id))).build();
+    }
 
     @POST
     @Consumes("application/json")
@@ -49,7 +56,7 @@ public class CategoryREST {
         if(doUpdate("INSERT INTO CATEGORY (NAME) VALUES (?)", name) == 0){
             return Response.status(500).build();
         } else {
-            return Response.status(200).build();
+            return Response.ok(getResults("SELECT * FROM CATEGORY")).build();
         }
     }
     
@@ -63,7 +70,7 @@ public class CategoryREST {
             return Response.status(500).build();
         }
         else{
-            return Response.status(200).build();
+            return Response.ok(getResults("SELECT * FROM CATEGORY")).build();
         }
     }
     
@@ -73,7 +80,7 @@ public class CategoryREST {
         if (doUpdate("DELETE FROM CATEGORY WHERE C_ID = ?", String.valueOf(id)) == 0){
              return Response.status(500).build();
         } else {
-            return Response.ok().build();
+            return Response.ok(getResults("SELECT * FROM CATEGORY")).build();
         }             
     }
     
