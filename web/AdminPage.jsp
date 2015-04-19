@@ -3,7 +3,17 @@
     Created on : 18-Apr-2015, 7:19:21 PM
     Author     : c0647456
 --%>
+<%
+    try {
+        String loggedIn = session.getAttribute("type").toString();
+        if (loggedIn.equals("0")) {
+            response.sendRedirect("index.jsp");
+        }
+    } catch (Exception e) {
 
+    }
+
+%>   
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
