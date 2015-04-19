@@ -40,14 +40,14 @@
         <script>
             $(document).ready(function() {
                 $.getJSON("./ws/homepost", function(datapost) {
-                $.getJSON("./ws/home", function(data) {
-                    for (var i = 0, len = data.length; i < len; i++) {
-                        console.log(data[i].category);
-                        $('#ftBody').append("<tr><td class='text-center'><i class='fa fa-question fa-2x text-primary'></i></td><td><h4><a href='./showThread.jsp?cid="+data[i].c_id+"'>"+data[i].category+"</a><br><small>Some description</small></h4></td><td class='text-center hidden-xs hidden-sm'><a href='#'>"+data[i].topics+"</a></td><td class='text-center hidden-xs hidden-sm'><a href='#'>"+datapost[i].posts+"</a></td><td class='hidden-xs hidden-sm'>by <a href='#'>John Doe</a><br><small><i class='fa fa-clock-o'></i> 3 months ago</small></td></tr> ");
-                    }
+                    $.getJSON("./ws/home", function(data) {
+                        for (var i = 0, len = data.length; i < len; i++) {
+                            console.log(data[i].category);
+                            $('#ftBody').append("<tr><td class='text-center'><i class='fa fa-comments fa-2x text-primary'></i></td><td><h4><a href='./showThread.jsp?cid=" + data[i].c_id + "'>" + data[i].category + "</a><br><small>Some description</small></h4></td><td class='text-center hidden-xs hidden-sm'><a href='#'>" + data[i].topics + "</a></td><td class='text-center hidden-xs hidden-sm'><a href='#'>" + datapost[i].posts + "</a></td><td class='hidden-xs hidden-sm'>by <a href='#'>John Doe</a><br><small><i class='fa fa-clock-o'></i> 3 months ago</small></td></tr> ");
+                        }
+                    });
                 });
             });
-        });
         </script>
     </head>
     <body>
@@ -55,8 +55,22 @@
             <div class="page-header page-heading">
                 <h1 class="pull-left">Forums</h1>
                 <ol class="breadcrumb pull-right where-am-i">
-                    <li><a href="#">Forums</a></li>
-                    <li class="active">List of topics</li>
+                    <%
+                        try {
+                            String loggedIn = session.getAttribute("loggedIn").toString();
+                            if (loggedIn.equals("true")) {
+                    %>
+                    <a href="destroySession.jsp">Logout</a>
+                    <% } else {%>
+                    <a href="login.jsp">Login</a>
+                    <% }
+                    } catch (Exception e) {%>
+                    <a href="login.jsp">Login</a><%
+                        }
+
+                    %> 
+
+
                 </ol>
                 <div class="clearfix"></div>
             </div>
