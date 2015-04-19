@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect("index.jsp");
                 }
                 else{
-                    response.sendRedirect("invalidpass.jsp");
+                    response.sendRedirect("login.jsp?error=1");
                 }
             }
         } catch (SQLException ex) {
