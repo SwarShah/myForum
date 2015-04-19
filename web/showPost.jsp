@@ -84,7 +84,7 @@
                     String uid = session.getAttribute("uid").toString();
                     if (logged.equals("true")) {
             %>
-            <form action="NewPostServlet" method="GET">
+            <form action="NewPostServlet" method="POST">
                 <div class="col-lg-10">
                     <textarea class="form-control" rows="3" id="textArea" name="postContent"></textarea>
                 </div>
