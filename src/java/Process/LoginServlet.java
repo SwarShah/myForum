@@ -37,24 +37,35 @@ public class LoginServlet extends HttpServlet {
                 Connection cn = credentials.dbConnection.getConnection();
                 String user = request.getParameter("username");
                 String pass = request.getParameter("password");
-                String query = "SELECT U_ID, PASSWORD FROM LOGIN WHERE USERNAME = ?";
+                String query = "SELECT U_ID, PASSWORD, TYPE FROM LOGIN WHERE USERNAME = ?";
                 PreparedStatement pstmt = cn.prepareStatement(query);
                 pstmt.setString(1, user);
                 ResultSet rs = pstmt.executeQuery();
                 String passwordDb = "";
                 int uidDb = 0, uid;
+                int type=0;
                 boolean loggedIn= false;
                 while (rs.next()) {
                     passwordDb = rs.getString("password");
                     uidDb = rs.getInt("u_id");
+                    type = rs.getInt("type");
                 }
                 loggedIn = BCrypt.BCrypt.checkpw(pass, passwordDb);
                 if (loggedIn) {
+                    
                     uid = uidDb;
                     HttpSession session = request.getSession();
                     session.setAttribute("uid", uidDb);
                     session.setAttribute("loggedIn", loggedIn);
-                    response.sendRedirect("index.jsp");
+                    if(type==1){
+                        session.setAttribute("type", 1);
+                        response.sendRedirect("AdminPage.jsp");
+                    }
+                    else{
+                        session.setAttribute("type", 0);
+                        response.sendRedirect("index.jsp");
+                    }
+                    
                 }
                 else{
                     response.sendRedirect("login.jsp?error=1");
