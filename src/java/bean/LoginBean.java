@@ -70,6 +70,7 @@ public class LoginBean {
             loggedIn = BCrypt.BCrypt.checkpw(this.password, passwordDb);
             if(loggedIn){
                 uid = uidDb;
+                
             }
         } catch (SQLException ex) {
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
