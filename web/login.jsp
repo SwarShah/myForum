@@ -11,8 +11,8 @@
         if (loggedIn.equals("true")) {
             response.sendRedirect("index.jsp");
         }
-    } catch(Exception e){
-        
+    } catch (Exception e) {
+
     }
 
 %>   
@@ -33,6 +33,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
+                    <%                        try {
+                            if (request.getParameter("error").equals("1")) {
+                    %>
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Error!</strong> Invalid username or password.
+                    </div><%
+                            }
+                        } catch (Exception e) {
+
+                        }
+                    %>
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Please sign in</h3>
@@ -52,7 +64,7 @@
                                         </label>
                                     </div>
                                     <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
-                                </fieldset>
+                                </fieldset>                                
                             </form>
                         </div>
                     </div>
