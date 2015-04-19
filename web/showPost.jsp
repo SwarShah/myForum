@@ -49,7 +49,7 @@
             <ul class="media-list forum">
 
                 <%
-                    
+
                     Connection cn = credentials.dbConnection.getConnection();
                     int t_id = Integer.valueOf(request.getParameter("tid"));
                     String query = "select p.description, u.username from post p, login u where p.u_id = u.u_id and p.t_id = ?";
@@ -75,25 +75,29 @@
                     }
                 %>
             </ul>
-            
-                
+
+
             <%
-                String s = session.getAttribute("loggedIn").toString();
-                boolean loggedIn = user.isLoggedIn();
-                   
-                if (s.equals("true")) {
+                try {
+                    String logged = session.getAttribute("loggedIn").toString();
+
+                    String uid = session.getAttribute("uid").toString();
+                    if (logged.equals("true")) {
             %>
             <form action="NewPostServlet" method="GET">
                 <div class="col-lg-10">
                     <textarea class="form-control" rows="3" id="textArea" name="postContent"></textarea>
                 </div>
-                <input type="hidden" name="uid" value="<%= session.getAttribute("uid") %>" />
-                <input type="hidden" name="tid" value="<%= t_id %>" />
+                <input type="hidden" name="uid" value="<%= uid%>" />
+                <input type="hidden" name="tid" value="<%= t_id%>" />
                 <input type="submit" class="btn btn-success">
             </form><%
             } else {%>
-            <p>Please login to reply <%= session.getAttribute("loggedIn") %></p> <%
+            <p>Please login to reply.</p> <%
                 }
+            } catch (Exception e) {
+            %><p>Please login to reply.</p><%
+                            }
             %>
         </div>
     </body>
