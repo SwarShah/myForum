@@ -15,18 +15,58 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script>
-            $(document).ready(function() {                
-                   //$.getJSON('./ws/blog', getBlog);
+            $(document).ready(function() {
+                $.getJSON('./ws/category', getCategories);
                 $('#send').click(function() {
                     $.ajax({
                         url: "./ws/category",
                         dataType: "json",
                         contentType: 'application/json; charset=UTF-8',
                         data: JSON.stringify({"name": $("#title").val()}),
-                        method: "POST"                       
+                        method: "POST",
+                        success: getCategories
                     });
                 });
-            });            
+            });
+            var getCategories = function(data) {
+                $('#catDiv').html('');
+                for (var i = 0; i < data.length; i++)
+                    $('#catDiv').append('<h2>' + data[i].name +
+                            '</h2><button class="btn btn-primary" onclick="doDelete(' +
+                            data[i].c_id + ')">Delete</button>&nbsp;<button class="btn btn-default" onclick="updateScreen(' +
+                            data[i].c_id + ')">Edit</button>');
+                $('#title').val('');
+            };
+
+            var doDelete = function(id) {
+                $.ajax({
+                    url: "./ws/category/" + id,
+                    dataType: "json",
+                    contentType: 'application/json; charset=UTF-8',
+                    method: "DELETE",
+                    success: getCategories
+                });
+            };
+
+            var updateScreen = function(id) {
+                $.getJSON('./ws/category/' + id, function(data) {
+                    $('#title').val(data[0].name);
+                    $('#update').removeClass('invisible');
+                    $('#update').click(function() {
+                        $.ajax({
+                            url: "./ws/category/" + id,
+                            dataType: "json",
+                            contentType: 'application/json; charset=UTF-8',
+                            data: JSON.stringify({"name": $("#title").val()}),
+                            method: "PUT",
+                            success: function(data) {
+                                getCategories(data);
+                                $('#update').addClass('invisible');
+                            }
+                        });
+                    });
+                });
+            };
         </script>
     </head>
     <body>
@@ -39,9 +79,8 @@
                 </div>
                 <button id="send" class="btn btn-default">Add</button>                
                 <button id="update" class="btn btn-default invisible">Edit</button>                
-                <div id="blog"></div>
-            </div>
-            <div class="col-md-4" id="catdiv"></div>            
+                <div id="catDiv"></div>
+            </div>           
         </section>
     </body>
 </html>
